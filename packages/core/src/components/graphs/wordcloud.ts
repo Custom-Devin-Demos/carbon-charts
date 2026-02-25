@@ -202,7 +202,7 @@ export class WordCloud extends Component {
 		const self = this;
 		this.parent
 			.selectAll('text.word')
-			.on('mouseover', function (datum) {
+			.on('mouseover', function (e, datum) {
 				const hoveredElement = this;
 				debouncedHighlight(hoveredElement);
 
@@ -238,7 +238,7 @@ export class WordCloud extends Component {
 					],
 				});
 			})
-			.on('mousemove', function (datum) {
+			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);
 
 				// Dispatch mouse event
@@ -253,7 +253,7 @@ export class WordCloud extends Component {
 				// Show tooltip
 				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
 			})
-			.on('click', function (datum) {
+			.on('click', function (e, datum) {
 				// Dispatch mouse event
 				self.services.events.dispatchEvent(
 					Events.WordCloud.WORD_CLICK,
@@ -263,7 +263,7 @@ export class WordCloud extends Component {
 					}
 				);
 			})
-			.on('mouseout', function (datum) {
+			.on('mouseout', function (e, datum) {
 				const hoveredElement = select(this);
 				debouncedHighlight(null);
 

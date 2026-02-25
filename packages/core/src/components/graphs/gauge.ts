@@ -631,14 +631,14 @@ export class Gauge extends Component {
 		const self = this;
 		this.parent
 			.selectAll('path.arc-foreground')
-			.on('mouseover', function (datum) {
+			.on('mouseover', function (e, datum) {
 				// Dispatch mouse event
 				self.services.events.dispatchEvent(Events.Gauge.ARC_MOUSEOVER, {
 					element: select(this),
 					datum,
 				});
 			})
-			.on('mousemove', function (datum) {
+			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);
 
 				// Dispatch mouse event
@@ -647,14 +647,14 @@ export class Gauge extends Component {
 					datum,
 				});
 			})
-			.on('click', function (datum) {
+			.on('click', function (e, datum) {
 				// Dispatch mouse event
 				self.services.events.dispatchEvent(Events.Gauge.ARC_CLICK, {
 					element: select(this),
 					datum,
 				});
 			})
-			.on('mouseout', function (datum) {
+			.on('mouseout', function (e, datum) {
 				const hoveredElement = select(this);
 
 				// Dispatch mouse event

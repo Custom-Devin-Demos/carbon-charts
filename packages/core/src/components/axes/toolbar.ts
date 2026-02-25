@@ -6,7 +6,7 @@ import { DOMUtils } from '../../services';
 import * as Configuration from '../../configuration';
 
 // D3 Imports
-import { event, select } from 'd3-selection';
+import { select } from 'd3-selection';
 
 // import the settings for the css prefix
 import settings from '@rocketsoftware/carbon-components/es/globals/js/settings';
@@ -180,12 +180,12 @@ export class Toolbar extends Component {
 					);
 					buttonContainer
 						.on('click', button.clickFunction)
-						.on('keyup', () => {
+						.on('keyup', (e) => {
 							if (
-								(event.key && event.key === 'Enter') ||
-								event.key === ' '
+								(e.key && e.key === 'Enter') ||
+								e.key === ' '
 							) {
-								event.preventDefault();
+								e.preventDefault();
 
 								button.clickFunction();
 							}
@@ -276,7 +276,7 @@ export class Toolbar extends Component {
 		}
 	}
 
-	toggleOverflowMenu() {
+	toggleOverflowMenu(e?) {
 		if (this.isOverflowMenuOpen()) {
 			// hide overflow menu
 			this.updateOverflowMenu(false);
@@ -299,14 +299,14 @@ export class Toolbar extends Component {
 						// hide overflow menu
 						self.updateOverflowMenu(false);
 					});
-					element.on('keyup', () => {
-						if (event.key === 'Enter') {
+						element.on('keyup', (e: KeyboardEvent) => {
+						if (e.key === 'Enter') {
 							// call the specified function
 							menuItem.clickFunction();
-						} else if (event.key === 'ArrowUp') {
+						} else if (e.key === 'ArrowUp') {
 							// focus on previous menu item
 							self.focusOnPreviousEnabledMenuItem(index);
-						} else if (event.key === 'ArrowDown') {
+						} else if (e.key === 'ArrowDown') {
 							// focus on next menu item
 							self.focusOnNextEnabledMenuItem(index);
 						}
@@ -318,7 +318,9 @@ export class Toolbar extends Component {
 			// default to focus on the first enabled menu item
 			self.focusOnNextEnabledMenuItem(-1);
 		}
-		event.stopImmediatePropagation();
+		if (e) {
+			e.stopImmediatePropagation();
+		}
 	}
 
 	getOverflowMenuHTML() {
@@ -411,7 +413,7 @@ export class Toolbar extends Component {
 			iconSVGContent: `<circle cx="16" cy="8" r="2"></circle>
 							 <circle cx="16" cy="16" r="2"></circle>
 							 <circle cx="16" cy="24" r="2"></circle>`,
-			clickFunction: () => this.toggleOverflowMenu(),
+			clickFunction: (e) => this.toggleOverflowMenu(e),
 		};
 	}
 

@@ -12,7 +12,7 @@ import { DOMUtils } from '../../services';
 import * as Configuration from '../../configuration';
 
 // D3 Imports
-import { select, event } from 'd3-selection';
+import { select } from 'd3-selection';
 
 export class Legend extends Component {
 	type = 'legend';
@@ -695,9 +695,9 @@ export class Legend extends Component {
 				);
 			});
 
-		svg.selectAll('g.legend-item rect.checkbox').on('keyup', function (d) {
-			if (event.key && (event.key === 'Enter' || event.key === ' ')) {
-				event.preventDefault();
+		svg.selectAll('g.legend-item rect.checkbox').on('keyup', function (e, d) {
+			if (e.key && (e.key === 'Enter' || e.key === ' ')) {
+				e.preventDefault();
 
 				self.model.toggleDataLabel(d.name);
 			}

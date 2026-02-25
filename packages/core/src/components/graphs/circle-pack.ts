@@ -5,7 +5,7 @@ import * as Configuration from '../../configuration';
 
 // D3 Imports
 import { hierarchy as d3Hierarchy, pack as D3Pack } from 'd3-hierarchy';
-import { event, select } from 'd3-selection';
+import { select } from 'd3-selection';
 
 import { ColorClassNameTypes, Events } from '../../interfaces/enums';
 import { Tools } from './../../tools';
@@ -239,7 +239,7 @@ export class CirclePack extends Component {
 		const self = this;
 		this.parent
 			.selectAll('circle.node')
-			.on('mouseover', function (datum) {
+			.on('mouseover', function (e, datum) {
 				const hoveredElement = select(this);
 				hoveredElement.classed('hovered', true);
 
@@ -342,7 +342,7 @@ export class CirclePack extends Component {
 					}
 				);
 			})
-			.on('mousemove', function (datum) {
+			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);
 
 				// Dispatch mouse event
@@ -356,7 +356,7 @@ export class CirclePack extends Component {
 
 				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
 			})
-			.on('mouseout', function (datum) {
+			.on('mouseout', function (e, datum) {
 				const hoveredElement = select(this);
 				hoveredElement.classed('hovered', false);
 
@@ -378,7 +378,7 @@ export class CirclePack extends Component {
 					hoveredElement,
 				});
 			})
-			.on('click', function (datum) {
+			.on('click', function (e, datum) {
 				const hoveredElement = select(this);
 				const disabled = hoveredElement.classed('non-focal');
 
@@ -423,7 +423,7 @@ export class CirclePack extends Component {
 					// don't want the click event to propagate to the background zoom out
 					// does not clash with the tooltip/other events because it does need to close the
 					// tooltip on the click event in order to zoom in/out
-					event.stopPropagation();
+					e.stopPropagation();
 				}
 
 				// Dispatch mouse event
