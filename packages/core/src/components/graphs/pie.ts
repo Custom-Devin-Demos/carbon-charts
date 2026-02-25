@@ -408,7 +408,7 @@ export class Pie extends Component {
 		const self = this;
 		this.parent
 			.selectAll('path.slice')
-			.on('mouseover', function (datum) {
+			.on('mouseover', function (e, datum) {
 				const hoveredElement = select(this);
 
 				hoveredElement
@@ -430,6 +430,7 @@ export class Pie extends Component {
 				// Show tooltip
 				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
 					hoveredElement,
+					event: e,
 					items: [
 						{
 							label: datum.data[groupMapsTo],
@@ -438,7 +439,7 @@ export class Pie extends Component {
 					],
 				});
 			})
-			.on('mousemove', function (datum) {
+			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);
 
 				// Dispatch mouse event
@@ -448,16 +449,18 @@ export class Pie extends Component {
 				});
 
 				// Show tooltip
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
-			.on('click', function (datum) {
+			.on('click', function (e, datum) {
 				// Dispatch mouse event
 				self.services.events.dispatchEvent(Events.Pie.SLICE_CLICK, {
 					element: select(this),
 					datum,
 				});
 			})
-			.on('mouseout', function (datum) {
+			.on('mouseout', function (e, datum) {
 				const hoveredElement = select(this);
 				hoveredElement
 					.classed('hovered', false)

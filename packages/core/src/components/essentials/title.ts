@@ -73,14 +73,17 @@ export class Title extends Component {
 			// add events for displaying the tooltip with the title
 			const self = this;
 			title
-				.on('mouseover', function () {
+				.on('mouseover', function (e) {
 					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
 						hoveredElement: title,
+						event: e,
 						content: untruncatedTitle,
 					});
 				})
-				.on('mousemove', function () {
-					self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				.on('mousemove', function (e) {
+					self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+						event: e,
+					});
 				})
 				.on('mouseout', function () {
 					self.services.events.dispatchEvent(Events.Tooltip.HIDE);

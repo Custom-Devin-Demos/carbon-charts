@@ -15,7 +15,7 @@ import * as Configuration from '../../configuration';
 import { extent } from 'd3-array';
 import { brushX } from 'd3-brush';
 import { area, line } from 'd3-shape';
-import { event } from 'd3-selection';
+import { select } from 'd3-selection';
 
 export class ZoomBar extends Component {
 	type = 'zoom-bar';
@@ -284,20 +284,21 @@ export class ZoomBar extends Component {
 	}
 
 	addBrushEventListener(zoomDomain, axesLeftMargin, width) {
-		const brushEventListener = () => {
-			const selection = event.selection;
+		const brushEventListener = (e) => {
+			const selection = e.selection;
 			// follow d3 behavior: when selection is null, reset default full range
 			// select behavior is completed, but nothing selected
 			if (selection === null) {
 				this.handleBrushedEvent(
 					zoomDomain,
 					this.xScale,
-					this.xScale.range()
+					this.xScale.range(),
+					e
 				);
 			} else if (selection[0] === selection[1]) {
 				// select behavior is not completed yet, do nothing
 			} else {
-				this.handleBrushedEvent(zoomDomain, this.xScale, selection);
+				this.handleBrushedEvent(zoomDomain, this.xScale, selection, e);
 			}
 		};
 
@@ -320,7 +321,7 @@ export class ZoomBar extends Component {
 	}
 
 	// brush event listener
-	handleBrushedEvent(zoomDomain, scale, selection) {
+	handleBrushedEvent(zoomDomain, scale, selection, e) {
 		const newDomain = [
 			scale.invert(selection[0]),
 			scale.invert(selection[1]),
@@ -329,16 +330,16 @@ export class ZoomBar extends Component {
 		// update brush handle position
 		this.updateBrushHandle(this.getContainerSVG(), selection, newDomain);
 
-		// be aware that the value of d3.event changes during an event!
+		// be aware that the value of the event changes during an event!
 		// update zoomDomain only if the event comes from mouse/touch event
 		if (
-			event.sourceEvent != null &&
-			(event.sourceEvent.type === 'mousemove' ||
-				event.sourceEvent.type === 'mouseup' ||
-				event.sourceEvent.type === 'mousedown' ||
-				event.sourceEvent.type === 'touchstart' ||
-				event.sourceEvent.type === 'touchmove' ||
-				event.sourceEvent.type === 'touchend')
+			e.sourceEvent != null &&
+			(e.sourceEvent.type === 'mousemove' ||
+				e.sourceEvent.type === 'mouseup' ||
+				e.sourceEvent.type === 'mousedown' ||
+				e.sourceEvent.type === 'touchstart' ||
+				e.sourceEvent.type === 'touchmove' ||
+				e.sourceEvent.type === 'touchend')
 		) {
 			// only if zoomDomain is never set or needs update
 			if (
@@ -355,11 +356,11 @@ export class ZoomBar extends Component {
 
 			// dispatch selection events
 			let zoomBarEventType;
-			if (event.type === 'start') {
+			if (e.type === 'start') {
 				zoomBarEventType = Events.ZoomBar.SELECTION_START;
-			} else if (event.type === 'brush') {
+			} else if (e.type === 'brush') {
 				zoomBarEventType = Events.ZoomBar.SELECTION_IN_PROGRESS;
-			} else if (event.type === 'end') {
+			} else if (e.type === 'end') {
 				zoomBarEventType = Events.ZoomBar.SELECTION_END;
 				// only dispatch zoom domain change event for triggering api call when event type equals to end
 				this.services.events.dispatchEvent(Events.ZoomDomain.CHANGE, {

@@ -12,7 +12,7 @@ import { Tools } from '../tools';
 // D3 Imports
 import { scaleBand, scaleLinear, scaleTime, scaleLog } from 'd3-scale';
 import { extent, sum } from 'd3-array';
-import { map, values } from 'd3-collection';
+// d3-collection removed in D3 v7; use native JS instead
 
 // Misc
 import {
@@ -536,7 +536,7 @@ export class CartesianScales extends Service {
 		// If scale is a LABELS scale, return some labels as the domain
 		if (axisOptions && scaleType === ScaleTypes.LABELS) {
 			// Get unique values
-			return map(displayData, (d) => d[mapsTo]).keys();
+			return Array.from(new Set(displayData.map((d) => d[mapsTo])));
 		}
 
 		// Get the extent of the domain
@@ -579,7 +579,7 @@ export class CartesianScales extends Service {
 			);
 			const stackedValues = dataValuesGroupedByKeys.map((dataValues) => {
 				const { sharedStackKey, ...numericalValues } = dataValues;
-				return sum(values(numericalValues) as number[]);
+				return sum(Object.values(numericalValues) as number[]);
 			});
 
 			allDataValues = [
@@ -611,7 +611,7 @@ export class CartesianScales extends Service {
 
 		// Add threshold values into the scale
 		if (thresholds && thresholds.length > 0) {
-			thresholds.forEach(threshold => {
+			thresholds.forEach((threshold) => {
 				const thresholdValue = Tools.getProperty(threshold, 'value');
 				if (thresholdValue !== null) allDataValues.push(thresholdValue);
 			});
