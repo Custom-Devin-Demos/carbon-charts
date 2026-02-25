@@ -296,17 +296,17 @@ export class Toolbar extends Component {
 						// hide overflow menu
 						self.updateOverflowMenu(false);
 					});
-						element.on('keyup', (e: KeyboardEvent) => {
-							if (e.key === 'Enter') {
-								// call the specified function
-								menuItem.clickFunction();
-							} else if (e.key === 'ArrowUp') {
-								// focus on previous menu item
-								self.focusOnPreviousEnabledMenuItem(index);
-							} else if (e.key === 'ArrowDown') {
-								// focus on next menu item
-								self.focusOnNextEnabledMenuItem(index);
-							}
+					element.on('keyup', (e: KeyboardEvent) => {
+						if (e.key === 'Enter') {
+							// call the specified function
+							menuItem.clickFunction();
+						} else if (e.key === 'ArrowUp') {
+							// focus on previous menu item
+							self.focusOnPreviousEnabledMenuItem(index);
+						} else if (e.key === 'ArrowDown') {
+							// focus on next menu item
+							self.focusOnNextEnabledMenuItem(index);
+						}
 						// Not hide overflow menu by keyboard arrow up/down event
 					});
 				}
