@@ -176,7 +176,7 @@ export class StackedBar extends Bar {
 		const self = this;
 		this.parent
 			.selectAll('path.bar')
-			.on('mouseover', function (datum) {
+			.on('mouseover', function (e, datum) {
 				const hoveredElement = select(this);
 				hoveredElement.classed('hovered', true);
 
@@ -225,10 +225,11 @@ export class StackedBar extends Bar {
 				// Show tooltip
 				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
 					hoveredElement,
+					event: e,
 					data: [matchingDataPoint],
 				});
 			})
-			.on('mousemove', function (datum) {
+			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);
 
 				// Dispatch mouse event
@@ -237,16 +238,18 @@ export class StackedBar extends Bar {
 					datum,
 				});
 
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
-			.on('click', function (datum) {
+			.on('click', function (e, datum) {
 				// Dispatch mouse event
 				self.services.events.dispatchEvent(Events.Bar.BAR_CLICK, {
 					element: select(this),
 					datum,
 				});
 			})
-			.on('mouseout', function (datum) {
+			.on('mouseout', function (e, datum) {
 				const hoveredElement = select(this);
 				hoveredElement.classed('hovered', false);
 

@@ -813,7 +813,7 @@ export class Radar extends Component {
 		// events on x axes rects
 		this.parent
 			.selectAll('.x-axes-rect > rect')
-			.on('mouseover', function (datum) {
+			.on('mouseover', function (e, datum) {
 				const hoveredElement = select(this);
 
 				// Dispatch mouse event
@@ -857,6 +857,7 @@ export class Radar extends Component {
 				// Show tooltip
 				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
 					hoveredElement,
+					event: e,
 					items: itemsToHighlight
 						.filter(
 							(datum) => typeof datum[valueMapsTo] === 'number'
@@ -872,7 +873,7 @@ export class Radar extends Component {
 						})),
 				});
 			})
-			.on('mousemove', function (datum) {
+			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);
 
 				// Dispatch mouse event
@@ -884,16 +885,18 @@ export class Radar extends Component {
 					}
 				);
 
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
-			.on('click', function (datum) {
+			.on('click', function (e, datum) {
 				// Dispatch mouse event
 				self.services.events.dispatchEvent(Events.Radar.X_AXIS_CLICK, {
 					element: select(this),
 					datum,
 				});
 			})
-			.on('mouseout', function (datum) {
+			.on('mouseout', function (e, datum) {
 				const hoveredElement = select(this);
 				const axisLine = self.parent.select(
 					`.x-axes .x-axis-${Tools.kebabCase(datum)}`
