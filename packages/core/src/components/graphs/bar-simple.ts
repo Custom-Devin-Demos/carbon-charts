@@ -177,11 +177,11 @@ export class SimpleBar extends Bar {
 					datum,
 				});
 
-					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-						hoveredElement,
-						event: e,
-						data: [datum],
-					});
+				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+					hoveredElement,
+					event: e,
+					data: [datum],
+				});
 			})
 			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);

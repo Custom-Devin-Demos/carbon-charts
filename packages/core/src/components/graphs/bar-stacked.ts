@@ -222,12 +222,12 @@ export class StackedBar extends Bar {
 					};
 				}
 
-					// Show tooltip
-					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-						hoveredElement,
-						event: e,
-						data: [matchingDataPoint],
-					});
+				// Show tooltip
+				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+					hoveredElement,
+					event: e,
+					data: [matchingDataPoint],
+				});
 			})
 			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);

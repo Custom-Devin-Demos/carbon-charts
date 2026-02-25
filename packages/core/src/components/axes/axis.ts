@@ -688,11 +688,11 @@ export class Axis extends Component {
 					axisScaleType === ScaleTypes.LABELS &&
 					datum.length > truncationThreshold
 				) {
-						self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-							hoveredElement: select(this),
-							event: e,
-							content: datum,
-						});
+					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+						hoveredElement: select(this),
+						event: e,
+						content: datum,
+					});
 				}
 			})
 			.on('mousemove', function (e, datum) {

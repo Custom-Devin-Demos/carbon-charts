@@ -221,12 +221,12 @@ export class GroupedBar extends Bar {
 					datum,
 				});
 
-					// Show tooltip
-					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-						hoveredElement,
-						event: e,
-						data: [datum],
-					});
+				// Show tooltip
+				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+					hoveredElement,
+					event: e,
+					data: [datum],
+				});
 			})
 			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);

@@ -287,22 +287,22 @@ export class Treemap extends Component {
 						return color(fillColor).darker(0.7).toString();
 					});
 
-					// Show tooltip
-					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-						hoveredElement,
-						event: e,
-						items: [
-							{
-								color: fillColor,
-								label: parent.data.name,
-								bold: true,
-							},
-							{
-								label: datum.data.name,
-								value: datum.data.value,
-							},
-						],
-					});
+				// Show tooltip
+				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+					hoveredElement,
+					event: e,
+					items: [
+						{
+							color: fillColor,
+							label: parent.data.name,
+							bold: true,
+						},
+						{
+							label: datum.data.name,
+							value: datum.data.value,
+						},
+					],
+				});
 
 				// Dispatch mouse event
 				self.services.events.dispatchEvent(

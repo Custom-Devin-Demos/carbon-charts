@@ -312,11 +312,11 @@ export class CirclePack extends Component {
 						null
 					).getPropertyValue('fill');
 
-						// Show tooltip
-						self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-							hoveredElement,
-							event: e,
-							items: [
+					// Show tooltip
+					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+						hoveredElement,
+						event: e,
+						items: [
 							{
 								color: fillColor,
 								label: datum.data.name,

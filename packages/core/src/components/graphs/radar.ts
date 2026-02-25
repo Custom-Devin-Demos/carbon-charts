@@ -854,11 +854,11 @@ export class Radar extends Component {
 					'value'
 				);
 
-					// Show tooltip
-					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-						hoveredElement,
-						event: e,
-						items: itemsToHighlight
+				// Show tooltip
+				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+					hoveredElement,
+					event: e,
+					items: itemsToHighlight
 						.filter(
 							(datum) => typeof datum[valueMapsTo] === 'number'
 						)
