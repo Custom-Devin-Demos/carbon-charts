@@ -15,14 +15,14 @@ Please direct all questions regarding support, bug fixes, and feature requests t
 Run the following command using [npm](https://www.npmjs.com/):
 
 ```bash
-npm install -S @rocketsoftware/charts @rocketsoftware/charts-svelte d3@5.x
+npm install -S @rocketsoftware/charts @rocketsoftware/charts-svelte d3@7.x
 ```
 
 If you prefer [Yarn](https://yarnpkg.com/en/), use the following command
 instead:
 
 ```bash
-yarn add @rocketsoftware/charts @rocketsoftware/charts-svelte d3@5.x
+yarn add @rocketsoftware/charts @rocketsoftware/charts-svelte d3@7.x
 ```
 
 **Note:** you'd also need to install `carbon-components` if you're not using a bundled version of the library.

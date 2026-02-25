@@ -3,7 +3,7 @@ import { Tools } from '../../tools';
 import { DOMUtils } from '../../services';
 import { ChartModel } from '../../model';
 import { AxisPositions, Events, ScaleTypes } from '../../interfaces';
-import { select, mouse } from 'd3-selection';
+import { select, pointer } from 'd3-selection';
 
 // Carbon position service
 import Position, { PLACEMENTS } from '@carbon/utils-position';
@@ -196,7 +196,7 @@ export class Threshold extends Component {
 
 		// Add event listener for showing the threshold tooltip
 		this.services.events.addEventListener(Events.Threshold.SHOW, (e) => {
-			this.setThresholdLabelPosition(e.detail.datum);
+			this.setThresholdLabelPosition(e.detail.datum, e.detail.event);
 
 			this.label.classed('hidden', false);
 		});
@@ -257,9 +257,11 @@ export class Threshold extends Component {
 		).classed('hidden', true);
 	}
 
-	setThresholdLabelPosition(datum) {
+	setThresholdLabelPosition(datum, mouseEvent?) {
 		const holder = this.services.domUtils.getHolder();
-		const mouseRelativePos = mouse(holder);
+		const mouseRelativePos = mouseEvent
+			? pointer(mouseEvent, holder)
+			: [0, 0];
 
 		// Format the threshold value using valueFormatter if defined in user-provided options
 		const formattedValue = datum.valueFormatter
@@ -311,7 +313,7 @@ export class Threshold extends Component {
 
 		// Add events to the threshold hoverable area
 		svg.selectAll('rect.threshold-hoverable-area')
-			.on('mouseover mousemove', function () {
+			.on('mouseover mousemove', function (e) {
 				select(this.parentNode)
 					.select('line.threshold-line')
 					.classed('active', true);
@@ -319,9 +321,10 @@ export class Threshold extends Component {
 				self.services.events.dispatchEvent(Events.Threshold.SHOW, {
 					hoveredElement: select(this),
 					datum: select(this).datum(),
+					event: e,
 				});
 			})
-			.on('mouseout', function () {
+			.on('mouseout', function (e) {
 				select(this.parentNode)
 					.select('line.threshold-line')
 					.classed('active', false);

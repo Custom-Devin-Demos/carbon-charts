@@ -9,7 +9,7 @@ import {
 } from '../../interfaces';
 
 // D3 Imports
-import { map } from 'd3-collection';
+// d3-collection removed in D3 v7; use native JS instead
 import { select } from 'd3-selection';
 import { ScaleBand, scaleBand } from 'd3-scale';
 
@@ -48,12 +48,16 @@ export class GroupedBar extends Bar {
 		// Grab container SVG
 		const svg = this.getContainerSVG({ withinChartClip: true });
 
-		const allDataLabels = map(displayData, (datum) => {
-			const domainIdentifier = this.services.cartesianScales.getDomainIdentifier(
-				datum
-			);
-			return datum[domainIdentifier];
-		}).keys();
+		const allDataLabels = Array.from(
+			new Set(
+				displayData.map((datum) => {
+					const domainIdentifier = this.services.cartesianScales.getDomainIdentifier(
+						datum
+					);
+					return datum[domainIdentifier];
+				})
+			)
+		);
 
 		// Update data on bar groups
 		const barGroups = svg
@@ -201,7 +205,7 @@ export class GroupedBar extends Bar {
 
 		this.parent
 			.selectAll('path.bar')
-			.on('mouseover', function (datum) {
+			.on('mouseover', function (e, datum) {
 				const hoveredElement = select(this);
 				hoveredElement.classed('hovered', true);
 
@@ -220,10 +224,11 @@ export class GroupedBar extends Bar {
 				// Show tooltip
 				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
 					hoveredElement,
+					event: e,
 					data: [datum],
 				});
 			})
-			.on('mousemove', function (datum) {
+			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);
 
 				// Dispatch mouse event
@@ -232,16 +237,18 @@ export class GroupedBar extends Bar {
 					datum,
 				});
 
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
-			.on('click', function (datum) {
+			.on('click', function (e, datum) {
 				// Dispatch mouse event
 				self.services.events.dispatchEvent(Events.Bar.BAR_CLICK, {
 					element: select(this),
 					datum,
 				});
 			})
-			.on('mouseout', function (datum) {
+			.on('mouseout', function (e, datum) {
 				const hoveredElement = select(this);
 				hoveredElement.classed('hovered', false);
 

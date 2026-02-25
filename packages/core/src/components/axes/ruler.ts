@@ -5,7 +5,7 @@ import { CartesianOrientations, Events } from '../../interfaces';
 import { Tools } from '../../tools';
 
 // D3 Imports
-import { Selection, mouse } from 'd3-selection';
+import { Selection, pointer } from 'd3-selection';
 
 type GenericSvgSelection = Selection<SVGElement, any, SVGElement, any>;
 
@@ -227,8 +227,8 @@ export class Ruler extends Component {
 		const self = this;
 		const displayData = this.model.getDisplayData();
 
-		let mouseMoveCallback = function () {
-			const pos = mouse(self.parent.node());
+		let mouseMoveCallback = function (e) {
+			const pos = pointer(e, self.parent.node());
 			self.showRuler(pos);
 		};
 

@@ -18,12 +18,12 @@ in prototype and production work.
 
 **with yarn:**
 \`\`\`bash
-yarn add @rocketsoftware/charts-angular d3@5.x
+yarn add @rocketsoftware/charts-angular d3@7.x
 \`\`\`
 
 **with npm:**
 \`\`\`bash
-npm install --save @rocketsoftware/charts-angular d3@5.x
+npm install --save @rocketsoftware/charts-angular d3@7.x
 \`\`\`
 
 **Note:** you'd also need to install \`carbon-components\` if you're not using a bundled version of the library.
