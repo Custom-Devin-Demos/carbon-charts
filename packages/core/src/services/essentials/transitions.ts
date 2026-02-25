@@ -22,12 +22,9 @@ selectionProto.transition = function (name?: any) {
 		const msg = e && (e as Error).message;
 		const isTransitionError =
 			msg &&
-			(msg.indexOf('not found') !== -1 ||
-				msg.indexOf('too late') !== -1);
+			(msg.indexOf('not found') !== -1 || msg.indexOf('too late') !== -1);
 		if (isTransitionError && name && name._savedDuration !== undefined) {
-			return _originalTransition
-				.call(this)
-				.duration(name._savedDuration);
+			return _originalTransition.call(this).duration(name._savedDuration);
 		}
 		throw e;
 	}
