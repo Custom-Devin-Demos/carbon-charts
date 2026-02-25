@@ -181,10 +181,7 @@ export class Toolbar extends Component {
 					buttonContainer
 						.on('click', button.clickFunction)
 						.on('keyup', (e) => {
-							if (
-								(e.key && e.key === 'Enter') ||
-								e.key === ' '
-							) {
+							if ((e.key && e.key === 'Enter') || e.key === ' ') {
 								e.preventDefault();
 
 								button.clickFunction();
@@ -299,7 +296,7 @@ export class Toolbar extends Component {
 						// hide overflow menu
 						self.updateOverflowMenu(false);
 					});
-						element.on('keyup', (e: KeyboardEvent) => {
+					element.on('keyup', (e: KeyboardEvent) => {
 						if (e.key === 'Enter') {
 							// call the specified function
 							menuItem.clickFunction();

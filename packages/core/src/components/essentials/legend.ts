@@ -695,13 +695,16 @@ export class Legend extends Component {
 				);
 			});
 
-		svg.selectAll('g.legend-item rect.checkbox').on('keyup', function (e, d) {
-			if (e.key && (e.key === 'Enter' || e.key === ' ')) {
-				e.preventDefault();
+		svg.selectAll('g.legend-item rect.checkbox').on(
+			'keyup',
+			function (e, d) {
+				if (e.key && (e.key === 'Enter' || e.key === ' ')) {
+					e.preventDefault();
 
-				self.model.toggleDataLabel(d.name);
+					self.model.toggleDataLabel(d.name);
+				}
 			}
-		});
+		);
 
 		svg.selectAll('g.additional-item').on('mouseover', function () {
 			const hoveredItem = select(this);

@@ -259,7 +259,9 @@ export class Threshold extends Component {
 
 	setThresholdLabelPosition(datum, mouseEvent?) {
 		const holder = this.services.domUtils.getHolder();
-		const mouseRelativePos = mouseEvent ? pointer(mouseEvent, holder) : [0, 0];
+		const mouseRelativePos = mouseEvent
+			? pointer(mouseEvent, holder)
+			: [0, 0];
 
 		// Format the threshold value using valueFormatter if defined in user-provided options
 		const formattedValue = datum.valueFormatter

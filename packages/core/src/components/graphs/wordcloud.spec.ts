@@ -2,10 +2,7 @@ import { Events } from '../../interfaces';
 import { select } from 'd3-selection';
 import { createChartHolder } from '../../tests/tools';
 import * as Charts from '../../index';
-import {
-	wordCloudData,
-	wordCloudOptions,
-} from '../../../demo/data/wordcloud';
+import { wordCloudData, wordCloudOptions } from '../../../demo/data/wordcloud';
 
 describe('wordcloud component', () => {
 	let chart;
