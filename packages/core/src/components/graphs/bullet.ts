@@ -401,6 +401,7 @@ export class Bullet extends Component {
 
 				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
 					hoveredElement,
+					event: e,
 					items: [
 						{
 							label: options.tooltip.groupLabel || 'Group',
@@ -438,7 +439,9 @@ export class Bullet extends Component {
 					datum,
 				});
 
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
 			.on('click', function (e, datum) {
 				// Dispatch mouse event

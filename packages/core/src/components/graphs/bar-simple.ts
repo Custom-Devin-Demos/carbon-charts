@@ -177,10 +177,11 @@ export class SimpleBar extends Bar {
 					datum,
 				});
 
-				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-					hoveredElement,
-					data: [datum],
-				});
+					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+						hoveredElement,
+						event: e,
+						data: [datum],
+					});
 			})
 			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);
@@ -191,7 +192,9 @@ export class SimpleBar extends Bar {
 					datum,
 				});
 
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
 			.on('click', function (e, datum) {
 				// Dispatch mouse event

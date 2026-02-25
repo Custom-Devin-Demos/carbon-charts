@@ -371,25 +371,26 @@ export class Scatter extends Component {
 					'bubble'
 				);
 
-				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-					hoveredElement,
-					data: [datum],
-					additionalItems: [
-						{
-							label: Tools.getProperty(
-								bubbleOptions,
-								'radiusLabel'
-							),
-							value:
-								datum[
-									Tools.getProperty(
-										bubbleOptions,
-										'radiusMapsTo'
-									)
-								],
-						},
-					],
-				});
+					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+						hoveredElement,
+						event: e,
+						data: [datum],
+						additionalItems: [
+							{
+								label: Tools.getProperty(
+									bubbleOptions,
+									'radiusLabel'
+								),
+								value:
+									datum[
+										Tools.getProperty(
+											bubbleOptions,
+											'radiusMapsTo'
+										)
+									],
+							},
+						],
+					});
 
 				// Dispatch mouse event
 				self.services.events.dispatchEvent(
@@ -412,7 +413,9 @@ export class Scatter extends Component {
 					}
 				);
 
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
 			.on('click', function (e, datum) {
 				// Dispatch mouse event

@@ -222,11 +222,12 @@ export class StackedBar extends Bar {
 					};
 				}
 
-				// Show tooltip
-				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-					hoveredElement,
-					data: [matchingDataPoint],
-				});
+					// Show tooltip
+					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+						hoveredElement,
+						event: e,
+						data: [matchingDataPoint],
+					});
 			})
 			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);
@@ -237,7 +238,9 @@ export class StackedBar extends Bar {
 					datum,
 				});
 
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
 			.on('click', function (e, datum) {
 				// Dispatch mouse event

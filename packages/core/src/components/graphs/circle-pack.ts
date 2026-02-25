@@ -312,10 +312,11 @@ export class CirclePack extends Component {
 						null
 					).getPropertyValue('fill');
 
-					// Show tooltip
-					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-						hoveredElement,
-						items: [
+						// Show tooltip
+						self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+							hoveredElement,
+							event: e,
+							items: [
 							{
 								color: fillColor,
 								label: datum.data.name,
@@ -354,7 +355,9 @@ export class CirclePack extends Component {
 					}
 				);
 
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
 			.on('mouseout', function (e, datum) {
 				const hoveredElement = select(this);

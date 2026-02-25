@@ -370,43 +370,44 @@ export class Boxplot extends Component {
 						Configuration.boxplot.box.opacity.hovered
 					);
 
-				// Show tooltip for single datapoint
-				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-					hoveredElement,
-					items: [
-						{
-							label: options.tooltip.groupLabel,
-							value: datum[groupMapsTo],
-							class: self.model.getColorClassName({
-								classNameTypes: [ColorClassNameTypes.TOOLTIP],
-							}),
-						},
-						{
-							label: 'Minimum',
-							value: datum.whiskers.min,
-						},
-						{
-							label: 'Q1',
-							value: datum.quartiles.q_25,
-						},
-						{
-							label: 'Median',
-							value: datum.quartiles.q_50,
-						},
-						{
-							label: 'Q3',
-							value: datum.quartiles.q_75,
-						},
-						{
-							label: 'Maximum',
-							value: datum.whiskers.max,
-						},
-						{
-							label: 'IQR',
-							value: datum.quartiles.q_75 - datum.quartiles.q_25,
-						},
-					],
-				});
+					// Show tooltip for single datapoint
+					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+						hoveredElement,
+						event: e,
+						items: [
+							{
+								label: options.tooltip.groupLabel,
+								value: datum[groupMapsTo],
+								class: self.model.getColorClassName({
+									classNameTypes: [ColorClassNameTypes.TOOLTIP],
+								}),
+							},
+							{
+								label: 'Minimum',
+								value: datum.whiskers.min,
+							},
+							{
+								label: 'Q1',
+								value: datum.quartiles.q_25,
+							},
+							{
+								label: 'Median',
+								value: datum.quartiles.q_50,
+							},
+							{
+								label: 'Q3',
+								value: datum.quartiles.q_75,
+							},
+							{
+								label: 'Maximum',
+								value: datum.whiskers.max,
+							},
+							{
+								label: 'IQR',
+								value: datum.quartiles.q_75 - datum.quartiles.q_25,
+							},
+						],
+					});
 
 				// Dispatch mouse event
 				self.services.events.dispatchEvent(
@@ -429,7 +430,9 @@ export class Boxplot extends Component {
 					}
 				);
 
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
 			.on('click', function (e, datum) {
 				// Dispatch mouse event
@@ -486,23 +489,24 @@ export class Boxplot extends Component {
 					)
 					.classed('unfilled', false);
 
-				// Show tooltip for single datapoint
-				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-					hoveredElement,
-					items: [
-						{
-							label: options.tooltip.groupLabel,
-							value: datum[groupMapsTo],
-							class: self.model.getColorClassName({
-								classNameTypes: [ColorClassNameTypes.TOOLTIP],
-							}),
-						},
-						{
-							label: 'Outlier',
-							value: datum[rangeIdentifier],
-						},
-					],
-				});
+					// Show tooltip for single datapoint
+					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+						hoveredElement,
+						event: e,
+						items: [
+							{
+								label: options.tooltip.groupLabel,
+								value: datum[groupMapsTo],
+								class: self.model.getColorClassName({
+									classNameTypes: [ColorClassNameTypes.TOOLTIP],
+								}),
+							},
+							{
+								label: 'Outlier',
+								value: datum[rangeIdentifier],
+							},
+						],
+					});
 
 				// Dispatch mouse event
 				self.services.events.dispatchEvent(
@@ -525,7 +529,9 @@ export class Boxplot extends Component {
 					}
 				);
 
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
 			.on('click', function (e, datum) {
 				// Dispatch mouse event

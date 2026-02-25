@@ -628,7 +628,7 @@ export class Legend extends Component {
 		);
 
 		svg.selectAll('g.legend-item')
-			.on('mouseover', function () {
+			.on('mouseover', function (e) {
 				self.services.events.dispatchEvent(Events.Legend.ITEM_HOVER, {
 					hoveredElement: select(this),
 				});
@@ -663,12 +663,15 @@ export class Legend extends Component {
 				if (hoveredItemData.name.length > truncationThreshold) {
 					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
 						hoveredElement: hoveredItem,
+						event: e,
 						content: hoveredItemData.name,
 					});
 				}
 			})
-			.on('mousemove', function () {
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+			.on('mousemove', function (e) {
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
 			.on('click', function () {
 				self.services.events.dispatchEvent(Events.Legend.ITEM_CLICK, {
@@ -706,13 +709,14 @@ export class Legend extends Component {
 			}
 		);
 
-		svg.selectAll('g.additional-item').on('mouseover', function () {
+		svg.selectAll('g.additional-item').on('mouseover', function (e) {
 			const hoveredItem = select(this);
 
 			const hoveredItemData = hoveredItem.datum() as any;
 			if (hoveredItemData.name.length > truncationThreshold) {
 				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
 					hoveredElement: hoveredItem,
+					event: e,
 					content: hoveredItemData.name,
 				});
 			}

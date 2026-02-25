@@ -218,6 +218,7 @@ export class WordCloud extends Component {
 				// Show tooltip
 				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
 					hoveredElement,
+					event: e,
 					items: [
 						{
 							label: options.tooltip.wordLabel,
@@ -251,7 +252,9 @@ export class WordCloud extends Component {
 				);
 
 				// Show tooltip
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
 			.on('click', function (e, datum) {
 				// Dispatch mouse event

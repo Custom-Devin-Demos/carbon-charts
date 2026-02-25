@@ -428,15 +428,16 @@ export class Pie extends Component {
 
 				const { groupMapsTo } = self.getOptions().data;
 				// Show tooltip
-				self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
-					hoveredElement,
-					items: [
-						{
-							label: datum.data[groupMapsTo],
-							value: datum.data.value,
-						},
-					],
-				});
+					self.services.events.dispatchEvent(Events.Tooltip.SHOW, {
+						hoveredElement,
+						event: e,
+						items: [
+							{
+								label: datum.data[groupMapsTo],
+								value: datum.data.value,
+							},
+						],
+					});
 			})
 			.on('mousemove', function (e, datum) {
 				const hoveredElement = select(this);
@@ -448,7 +449,9 @@ export class Pie extends Component {
 				});
 
 				// Show tooltip
-				self.services.events.dispatchEvent(Events.Tooltip.MOVE);
+				self.services.events.dispatchEvent(Events.Tooltip.MOVE, {
+					event: e,
+				});
 			})
 			.on('click', function (e, datum) {
 				// Dispatch mouse event
